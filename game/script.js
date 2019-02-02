@@ -3,22 +3,12 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-    ev.dataTransfer.setData("id", ev.target.id);
+    ev.dataTransfer.setData("number", ev.target.textContent);
 }
 
 function drop(ev) {
     ev.preventDefault();
     var placeholder = ev.target;
-    if (placeholder.id.endsWith("a")) {
-        placeholder = placeholder.parentElement;
-    }
-    var id = ev.dataTransfer.getData("id");
-    if (placeholder.childElementCount > 0) {
-        var old = placeholder.childNodes.item(0);
-        var oldValue = old.textContent;
-        var oldPlace = document.getElementById(oldValue)
-        oldPlace.appendChild(old);
-    }  
-    var element = document.getElementById(id);
-    placeholder.appendChild(element);
+    var number = ev.dataTransfer.getData("number");
+    placeholder.textContent = number;
 }
