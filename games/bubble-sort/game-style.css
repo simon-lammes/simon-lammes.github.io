@@ -5,11 +5,15 @@
     border-radius: 13px;
 }
 
-#numberRow div div {
+#originalNumberRow div div {
     background-color: azure;
     
 }
 
 .row {
     margin-bottom: 10px;
+}
+
+.first-pointer {
+    background-color: red;
 }
