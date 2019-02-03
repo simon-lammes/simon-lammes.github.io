@@ -1,4 +1,6 @@
 var array;
+var firstPointer;
+var secondPointer;
 
 function allowNumberDrop(ev) {
     for (var i = 0; i < ev.dataTransfer.types.length; i++) {
@@ -52,10 +54,28 @@ function displayArray() {
         var $place = $("#" + (i) + "originalNumber").get(0);
         $place.textContent = array[i];
     }
-    $("#5originalPointer").addClass("first-pointer");
+}
+
+function setPointers() {
+    firstPointer = 0;
+    secondPointer = array.length - 1;
+}
+
+function showPointers() {
+    $("#" + firstPointer + "originalPointer").addClass("first-pointer");
+    $("#" + secondPointer + "originalPointer").addClass("second-pointer");
+}
+
+function resetStep() {
+    var $numbers = $("#newNumberRow div");
+    $numbers.find("div").text("");
+    var $pointers = $("#newPointerRow div");
+    $pointers.find("div").removeClass("first-pointer second-pointer");
 }
 
 $(document).ready(function() {
     fillArray();
     displayArray();
+    setPointers();
+    showPointers();
 });
