@@ -2,30 +2,206 @@
 layout: default
 ---
 <!DOCTYPE html>
+<script>
+    var array;
+    var firstPointer;
+    var secondPointer;
+    var newArray;
+    var newFirstPointer;
+    var newSecondPointer;
+
+    function allowNumberDrop(ev) {
+        for (var i = 0; i < ev.dataTransfer.types.length; i++) {
+            var dataType = ev.dataTransfer.types[i];
+            if (dataType == "number") {
+                ev.preventDefault();
+            }
+        }
+    }
+
+    function allowPointerDrop(ev) {
+        for (var i = 0; i < ev.dataTransfer.types.length; i++) {
+            var dataType = ev.dataTransfer.types[i];
+            if (dataType == "pointer") {
+                ev.preventDefault();
+            }
+        }
+    }
+
+    function dragNumber(ev) {
+        ev.dataTransfer.setData("number", ev.target.textContent);
+    }
+
+    function dragPointer(ev) {
+        ev.dataTransfer.setData("pointer", ev.target.className);
+    }
+
+    function dropNumber(ev) {
+        ev.preventDefault();
+        var placeholder = ev.target;
+        var number = ev.dataTransfer.getData("number");
+        placeholder.textContent = number;
+    }
+
+    function dropPointer(ev) {
+        ev.preventDefault();
+        resetNewPointers();
+        var pointerPosition = ev.target;
+        var pointer = ev.dataTransfer.getData("pointer");
+        resetNewPointers(pointer);
+        pointerPosition.className = pointer;
+    }
+
+    function fillArray() {
+        array = [];
+        var arrayLength = {{ site.data.settings.game-settings.arrayLength }}
+    for (var i = 0; i < arrayLength; i++) {
+        array.push(Math.floor((Math.random() * 20) + 1));
+    }
+    } 
+
+    function displayArray() {
+        for (var i = 0; i < array.length; i++) {
+            var $place = $("#" + (i) + "originalNumber").get(0);
+            $place.textContent = array[i];
+        }
+    }
+
+    function setPointers() {
+        firstPointer = 0;
+        secondPointer = array.length - 1;
+    }
+
+    function showPointers() {
+        $("#" + firstPointer + "originalPointer").addClass("first-pointer");
+        $("#" + secondPointer + "originalPointer").addClass("second-pointer");
+    }
+
+    function resetStep() {
+        resetNewNumbers();
+        resetNewPointers("first-pointer");
+        resetNewPointers("second-pointer");
+    }
+
+    function hidePointers() {
+        var $pointers = $("#originalPointerRow div");
+        $pointers.find("div").removeClass("first-pointer second-pointer");
+    }
+
+    function resetGame() {
+        setPointers();
+        resetStep();
+    }
+
+    function resetNewNumbers() {
+        var $numbers = $("#newNumberRow div");
+        $numbers.find("div").text("");
+    }
+
+    function resetNewPointers(pointerClass) {
+        var $pointers = $("#newPointerRow div");
+        $pointers.find("div").removeClass(pointerClass);
+    }
+
+    function fillEmptyPlaceholders() {
+        for (var i = 0; i < array.length; i++) {
+            var $newNumber = $("#" + i +"newNumber")
+            if ($newNumber.text() == "") {
+                var originalNumber = array[i];
+                $newNumber.text(originalNumber);
+            }
+        }
+        if ($("#newPointerRow .first-pointer").length == 0) {
+            $("#" + firstPointer + "newPointer").addClass("first-pointer");
+        }
+        if ($("#newPointerRow .second-pointer").length == 0) {
+            $("#" + secondPointer + "newPointer").addClass("second-pointer");
+        }
+    }
+
+    function isStepCorrect() {
+        fillEmptyPlaceholders();
+        for (var i = 0; i < array.length; i++) {
+            var newNumber = $("#" + i +"newNumber").text();
+            var rightNumber = newArray[i];
+            if (newNumber != "" && newNumber != rightNumber) {
+                return false;
+            }
+        }
+        var newFirstPointerElement = $("#newPointerRow .first-pointer").get(0);
+        var newFirstPointerIndex = parseInt(newFirstPointerElement.getAttribute("id"), 10);
+        var newSecondPointerElement = $("#newPointerRow .second-pointer").get(0);
+        var newSecondPointerIndex = parseInt(newSecondPointerElement.getAttribute("id"), 10);
+        if (newFirstPointerIndex != newFirstPointer || newSecondPointerIndex != newSecondPointer) {
+            return false;
+        }
+        return true;
+    }
+
+    function evaluateStep() {
+        var isCorrect = isStepCorrect();
+        if (isCorrect) {
+            firstPointer = newFirstPointer;
+            secondPointer = newSecondPointer;
+            array = newArray;
+        } else {
+            alert("something is wrong");
+        }
+    }
+
+    function nextIteration() {
+        if (isAlgorithmFinished()) {
+            finishGame();
+        } else {
+            calculateNextIteration();
+            evaluateStep();
+            resetStep();
+            hidePointers();
+            showPointers();
+            displayArray();
+        }
+    }
+
+    function finishGame() {
+        alert("The game is finished");
+        resetGame();
+    }
+
+    $(document).ready(function() {
+        fillArray();
+        displayArray();
+        setPointers();
+        showPointers();
+    });
+</script>
 <script src="script.js"></script>
 <link href="game-style.css" type="text/css" rel="stylesheet">
+{% assign arrayLength = site.data.settings.game-settings.arrayLength %}
+{% assign maxIndex = arrayLength | minus: 1 %}
+<!--There are 12 columns in bootsrap and they are divided among the numbers. The result determins how many columns each number has.-->
+{% assign columnSpan = 12 | divided_by: arrayLength %}
 <div class="row">
     <h1 id="feedback"></h1>
 </div>
 <div draggable="false" id="my-root" class="container-fluid">
     <div style="min-height: 50px;" id="originalNumberRow" class="row">
-        {% for i in (0..7) %}
-        <div class="col-sm-1"><div id="{{ i }}originalNumber" draggable="true" ondragstart="dragNumber(event)"></div></div>
+        {% for i in (0..maxIndex) %}
+        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}originalNumber" draggable="true" ondragstart="dragNumber(event)"></div></div>
         {% endfor %}
     </div>
     <div style="min-height: 50px;" id="originalPointerRow" class="row">
-        {% for i in (0..7) %}
-        <div class="col-sm-1"><div id="{{ i }}originalPointer" draggable="true" ondragstart="dragPointer(event)"></div></div>
+        {% for i in (0..maxIndex) %}
+        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}originalPointer" draggable="true" ondragstart="dragPointer(event)"></div></div>
         {% endfor %}
     </div>
     <div  id="newNumberRow" class="row">
-        {% for i in (0..7) %}
-        <div class="col-sm-1"><div id="{{ i }}newNumber" class="well" ondrop="dropNumber(event)" ondragover="allowNumberDrop(event)"></div></div>
+        {% for i in (0..maxIndex) %}
+        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}newNumber" class="well" ondrop="dropNumber(event)" ondragover="allowNumberDrop(event)"></div></div>
         {% endfor %}
     </div>
     <div style="min-height: 50px;" id="newPointerRow" class="row">
-        {% for i in (0..7) %}
-        <div class="col-sm-1" ><div id="{{ i }}newPointer" ondrop="dropPointer(event)" ondragover="allowPointerDrop(event)"></div></div>
+        {% for i in (0..maxIndex) %}
+        <div class="col-sm-{{ columnSpan }}" ><div id="{{ i }}newPointer" ondrop="dropPointer(event)" ondragover="allowPointerDrop(event)"></div></div>
         {% endfor %}
     </div>
 </div>
