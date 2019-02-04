@@ -182,22 +182,22 @@ layout: default
     {{ content }}
 </div>
 <div draggable="false" id="my-root" class="container-fluid">
-    <div style="min-height: 50px;" id="originalNumberRow" class="row">
+    <div id="originalNumberRow" class="row">
         {% for i in (0..maxIndex) %}
         <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}originalNumber" draggable="true" ondragstart="dragNumber(event)"></div></div>
         {% endfor %}
     </div>
-    <div style="min-height: 50px;" id="originalPointerRow" class="row">
+    <div id="originalPointerRow" class="row">
         {% for i in (0..maxIndex) %}
         <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}originalPointer" draggable="true" ondragstart="dragPointer(event)"></div></div>
         {% endfor %}
     </div>
-    <div  id="newNumberRow" class="row">
+    <div id="newNumberRow" class="row">
         {% for i in (0..maxIndex) %}
         <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}newNumber" class="well" ondrop="dropNumber(event)" ondragover="allowNumberDrop(event)"></div></div>
         {% endfor %}
     </div>
-    <div style="min-height: 50px;" id="newPointerRow" class="row">
+    <div id="newPointerRow" class="row">
         {% for i in (0..maxIndex) %}
         <div class="col-sm-{{ columnSpan }}" ><div id="{{ i }}newPointer" ondrop="dropPointer(event)" ondragover="allowPointerDrop(event)"></div></div>
         {% endfor %}

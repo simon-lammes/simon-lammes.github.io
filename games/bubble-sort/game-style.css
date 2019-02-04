@@ -1,13 +1,14 @@
 #my-root div div div {
-    padding: 30px;
+    padding: 65px;
     text-align: center;
-    margin: 10px;
+    margin: 5px;
     border-radius: 13px;
+    font-size: 32px;
 }
 
 #originalNumberRow div div {
     background-color: azure;
-    
+    padding: 40px !important;
 }
 
 .row {
