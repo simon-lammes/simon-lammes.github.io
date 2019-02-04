@@ -1,6 +1,9 @@
 var array;
 var firstPointer;
 var secondPointer;
+var newArray;
+var newFirstPointer;
+var newSecondPointer;
 
 function allowNumberDrop(ev) {
     for (var i = 0; i < ev.dataTransfer.types.length; i++) {
@@ -111,47 +114,54 @@ function fillEmptyPlaceholders() {
 }
 
 function evaluateStep() {
+    fillEmptyPlaceholders();
     for (var i = 0; i < array.length; i++) {
         var newNumber = $("#" + i +"newNumber").text();
-        var originalNumber = $("#" + i + "originalNumber").text();
-        if (newNumber != "" && newNumber != originalNumber) {
-            alert("Wrong number!");
-            resetStep();
-            return;
+        var rightNumber = newArray[i];
+        if (newNumber != "" && newNumber != rightNumber) {
+            return false;
         }
     }
-    var newFirstPointer = $("#newPointerRow .first-pointer").get(0);
-    var newFirstPointerIndex = parseInt(newFirstPointer.getAttribute("id"), 10);
-    var newSecondPointer = $("#newPointerRow .second-pointer").get(0);
-    var newSecondPointerIndex = parseInt(newSecondPointer.getAttribute("id"), 10);
-    if (newFirstPointerIndex != firstPointer || newSecondPointerIndex != secondPointer) {
-        alert("Wrong pointer!");
-        resetStep();
-        return;
+    var newFirstPointerElement = $("#newPointerRow .first-pointer").get(0);
+    var newFirstPointerIndex = parseInt(newFirstPointerElement.getAttribute("id"), 10);
+    var newSecondPointerElement = $("#newPointerRow .second-pointer").get(0);
+    var newSecondPointerIndex = parseInt(newSecondPointerElement.getAttribute("id"), 10);
+    if (newFirstPointerIndex != newFirstPointer || newSecondPointerIndex != newSecondPointer) {
+        return false;
     }
-    resetStep();
+    return true;
 }
 
 function nextIteration() {
-    fillEmptyPlaceholders();
-    if (array[firstPointer+1] < array[firstPointer]) {
-        var temp = array[firstPointer+1];
-        array[firstPointer+1] = array[firstPointer];
-        array[firstPointer] = temp;
+    newArray = array.slice();
+    newFirstPointer = firstPointer;
+    newSecondPointer = secondPointer;
+    if (newArray[newFirstPointer+1] < newArray[newFirstPointer]) {
+        var temp = newArray[newFirstPointer+1];
+        newArray[newFirstPointer+1] = newArray[newFirstPointer];
+        newArray[newFirstPointer] = temp;
     }
-    if (firstPointer < secondPointer - 1) {
-        firstPointer++;
+    if (newFirstPointer < newSecondPointer - 1) {
+        newFirstPointer++;
     } else {
-        secondPointer--;
-        firstPointer = 0;
+        newSecondPointer--;
+        newFirstPointer = 0;
     }
-    if (secondPointer == 1) {
+    if (newSecondPointer == 1) {
         resetGame(); //the algorithm is done
     }
+    var isCorrect = evaluateStep();
+    if (isCorrect) {
+        firstPointer = newFirstPointer;
+        secondPointer = newSecondPointer;
+        array = newArray;
+    } else {
+        alert("something is wrong");
+    }
+    resetStep();
     hidePointers();
     showPointers();
     displayArray();
-    evaluateStep();
 }
 
 $(document).ready(function() {
