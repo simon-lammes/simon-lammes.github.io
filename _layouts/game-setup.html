@@ -6,9 +6,6 @@ layout: default
 {% assign maxIndex = arrayLength | minus: 1 %}
 <!--There are 12 columns in bootsrap and they are divided among the numbers. The result determins how many columns each number has.-->
 {% assign columnSpan = 12 | divided_by: arrayLength %}
-<div class="row">
-    {{ content }}
-</div>
 <div draggable="false" id="my-root" class="container-fluid">
     <div id="originalNumberRow" class="row">
         {% for i in (0..maxIndex) %}
@@ -36,4 +33,26 @@ layout: default
         <button type="button" onclick="nextIteration()" class="btn btn-primary btn-xlarge">next iteration</button>
     </div> 
 </div>
-<div id="output" class="container-fluid"></div>
+<div class="container-fluid">
+    <h1>Getting started</h1>
+    <h2>The purpose</h2>
+    <p>This game is meant to help you learn sorting algorithms by letting you do each step and giving you feedback.</p>
+    <h2>How does this game work</h2>
+    <p>This game consists of four rows:</p>
+    <ol>
+        <li>the original numbers that are about to be sorted</li>
+        <li>the original pointers that the algorithm needs to work</li>
+        <li>the numbers in the next step</li>
+        <li>the pointers in the next step</li>
+    </ol>
+    <h3>What are you supposed to do?</h3>
+    <ol>
+        <li>You need to know how the sorting algorithm works. You'll get help <a href="#algorithm-specifics">down on this page</a></li>
+        <li>Look at the first row and determine which numbers are going to be interchanged in the next step. Interchange those numbers yourself by dragging them to their new position in the third row.</li>
+        <li>Look at the pointers and detetermine where they will be in the next step. Drag them to their new position in the fourth row.</li>
+        <li>Click next iteration. If your predictions were right, the algorithm will proceed. If you didn't predict the next situation correctly, you'll be advised.</li>
+    </ol>
+</div>
+<div id="algorithm-specifics" class="container-fluid">
+    {{ content }}
+</div>
