@@ -5,6 +5,28 @@ var newPointerArray;
 var userNumberArray;
 var userPointerArray;
 
+function showNextStep() {
+    calculateNextIteration();
+    userPointerArray = newPointerArray.slice();
+    userNumberArray = newNumberArray.slice();
+    for (var i = 0; i < userPointerArray.length; i++) {
+        var pointerPosition = userPointerArray[i];
+        var pointerClass = "pointer-" + i;
+        $("#newPointerRow ." + pointerClass).removeClass(pointerClass);
+        if (userPointerArray[i] != originalPointerArray[i]) {
+            $("#" + pointerPosition + "newPointer").addClass(pointerClass);
+        }
+    }
+    for (var i = 0; i < userNumberArray.length; i++) {
+        var numberPlaceholder = $("#" + i + "newNumber");
+        if (userNumberArray[i] != originalNumberArray[i]) {
+            numberPlaceholder.text(userNumberArray[i]);
+        } else {
+            numberPlaceholder.text("");
+        }
+    }
+}
+
 function allowNumberDrop(ev) {
     for (var i = 0; i < ev.dataTransfer.types.length; i++) {
         var dataType = ev.dataTransfer.types[i];
@@ -124,27 +146,5 @@ function displayOriginalValues() {
     for (var i = 0; i < originalPointerArray.length; i++) {
         $("#originalPointerRow .pointer-" + i).removeClass("pointer-" + i);
         $("#" + originalPointerArray[i] + "originalPointer").addClass("pointer-" + i);
-    }
-}
-
-function showNextStep() {
-    calculateNextIteration();
-    userPointerArray = newPointerArray.slice();
-    userNumberArray = newNumberArray.slice();
-    for (var i = 0; i < userPointerArray.length; i++) {
-        var pointerPosition = userPointerArray[i];
-        var pointerClass = "pointer-" + i;
-        $("#newPointerRow ." + pointerClass).removeClass(pointerClass);
-        if (userPointerArray[i] != originalPointerArray[i]) {
-            $("#" + pointerPosition + "newPointer").addClass(pointerClass);
-        }
-    }
-    for (var i = 0; i < userNumberArray.length; i++) {
-        var numberPlaceholder = $("#" + i + "newNumber");
-        if (userNumberArray[i] != originalNumberArray[i]) {
-            numberPlaceholder.text(userNumberArray[i]);
-        } else {
-            numberPlaceholder.text("");
-        }
     }
 }
