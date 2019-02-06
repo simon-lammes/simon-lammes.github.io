@@ -31,7 +31,7 @@ function calculateNextIteration() {
 }
 
 function isAlgorithmFinished() {
-    if (newPointerArray[1] == 1 && originalNumberArray[newPointerArray[0]] <= originalNumberArray[newPointerArray[1]]) {
+    if (originalPointerArray[1] == 1 && originalNumberArray[originalPointerArray[0]] <= originalNumberArray[originalPointerArray[1]]) {
         return true;
     }
     return false;

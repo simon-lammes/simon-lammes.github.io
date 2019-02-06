@@ -126,3 +126,25 @@ function displayOriginalValues() {
         $("#" + originalPointerArray[i] + "originalPointer").addClass("pointer-" + i);
     }
 }
+
+function showNextStep() {
+    calculateNextIteration();
+    userPointerArray = newPointerArray.slice();
+    userNumberArray = newNumberArray.slice();
+    for (var i = 0; i < userPointerArray.length; i++) {
+        var pointerPosition = userPointerArray[i];
+        var pointerClass = "pointer-" + i;
+        $("#newPointerRow ." + pointerClass).removeClass(pointerClass);
+        if (userPointerArray[i] != originalPointerArray[i]) {
+            $("#" + pointerPosition + "newPointer").addClass(pointerClass);
+        }
+    }
+    for (var i = 0; i < userNumberArray.length; i++) {
+        var numberPlaceholder = $("#" + i + "newNumber");
+        if (userNumberArray[i] != originalNumberArray[i]) {
+            numberPlaceholder.text(userNumberArray[i]);
+        } else {
+            numberPlaceholder.text("");
+        }
+    }
+}
