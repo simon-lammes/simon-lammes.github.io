@@ -4,6 +4,8 @@ var newNumberArray;
 var newPointerArray;
 var userNumberArray;
 var userPointerArray;
+var hintCount;
+var mistakeCount;
 
 function showNextStep() {
     calculateNextIteration();
@@ -25,6 +27,7 @@ function showNextStep() {
             numberPlaceholder.text("");
         }
     }
+    hintCount++;
 }
 
 function allowNumberDrop(ev) {
@@ -87,7 +90,18 @@ $(document).ready(function() {
 
 function nextIteration() {
     if (isAlgorithmFinished()) {
-        alert("The algorithm is finished.");
+        var endMessage = "You have finished sorting the algorithm with ";
+        if (hintCount == 1) {
+            endMessage += hintCount + " hint and ";
+        } else {
+            endMessage += hintCount + " hints and ";
+        }
+        if (mistakeCount == 1) {
+            endMessage += mistakeCount + " mistake.";
+        } else {
+            endMessage += mistakeCount + " mistakes.";
+        }
+        alert(endMessage);
     } else {
         calculateNextIteration();
         var errorMessage = searchUserInputForErrors()
@@ -95,6 +109,7 @@ function nextIteration() {
             iterate();
         } else {
             alert(errorMessage);
+            mistakeCount++;
         }
     }   
 }
@@ -136,6 +151,8 @@ function setupAllValues() {
     newPointerArray = [];
     userNumberArray = originalNumberArray.slice();
     userPointerArray = originalPointerArray.slice();
+    mistakeCount = 0;
+    hintCount = 0;
 }
 
 function displayOriginalValues() {
