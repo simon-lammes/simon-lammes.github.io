@@ -7,7 +7,6 @@
 }
 
 #originalNumberRow div div {
-    background-color: azure;
     padding: 40px !important;
 }
 
@@ -25,4 +24,16 @@
 
 .btn-xlarge {
     font-size: 36px;
+}
+
+.pivot {
+    background-color: yellow !important;
+}
+
+.smaller-or-equals {
+    background-color: green;
+}
+
+.bigger-or-equals {
+    background-color: blueviolet;
 }

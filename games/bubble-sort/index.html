@@ -3,10 +3,9 @@ layout: default
 title: Bubble Sort
 ---
 <script src="bubble-sort-script.js"></script>
-<script src="game-script.js"></script>
-<link href="game-style.css" type="text/css" rel="stylesheet">
+<link href="../game-style.css" rel="stylesheet" type="text/css">
 <!DOCTYPE html>
-{% assign arrayLength = site.data.settings.game-settings.arrayLength %}
+{% assign arrayLength = site.data.settings.game-settings.arrayLengthBubbleSort %}
 {% assign maxIndex = arrayLength | minus: 1 %}
 <!--There are 12 columns in bootsrap and they are divided among the numbers. The result determins how many columns each number has.-->
 {% assign columnSpan = 12 | divided_by: arrayLength %}

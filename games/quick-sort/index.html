@@ -1,0 +1,31 @@
+---
+layout: default
+title: Quick Sort
+---
+<!DOCTYPE html>
+<link href="../game-style.css" rel="stylesheet" type="text/css">
+<script src="quick-sort-script.js"></script>
+{% assign arrayLength = site.data.settings.game-settings.arrayLengthQuickSort %}
+{% assign maxIndex = arrayLength | minus: 1 %}
+<!--There are 12 columns in bootsrap and they are divided among the numbers. The result determins how many columns each number has.-->
+{% assign columnSpan = 12 | divided_by: arrayLength %}
+<div draggable="false" id="my-root" class="container-fluid">
+    <div id="originalNumberRow" class="row">
+        {% for i in (0..maxIndex) %}
+        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}originalNumber" draggable="true" ondragstart="dragNumber(event)"></div></div>
+        {% endfor %}
+    </div>
+    <div id="userNumberRow" class="row">
+        {% for i in (0..maxIndex) %}
+        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}userNumber" class="well" ondrop="dropNumber(event)" ondragover="allowNumberDrop(event)"  draggable="true" ondragstart="dragNumber(event)"></div></div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <button type="button" onclick="showNextStep()" class="btn btn-primary btn-xlarge">show next step</button>
+        </div>
+        <div class="col-sm-4">
+            <button type="button" onclick="nextIteration()" class="btn btn-success btn-xlarge">next iteration</button>
+        </div> 
+    </div>
+</div>

@@ -1,0 +1,16 @@
+#my-root div div div {
+    padding: 65px;
+    text-align: center;
+    margin: 5px;
+    border-radius: 13px;
+    font-size: 32px;
+}
+
+#originalNumberRow div div {
+    padding: 40px !important;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+

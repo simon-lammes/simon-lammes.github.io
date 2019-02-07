@@ -1,3 +1,4 @@
 {
-	"arrayLength": "6"
+	"arrayLengthBubbleSort": "6",
+    "arrayLengthQuickSort": "6"
 }
