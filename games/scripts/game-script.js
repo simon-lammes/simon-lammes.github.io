@@ -14,13 +14,13 @@ function showNextStep() {
     for (var i = 0; i < userPointerArray.length; i++) {
         var pointerPosition = userPointerArray[i];
         var pointerClass = "pointer-" + i;
-        $("#newPointerRow ." + pointerClass).removeClass(pointerClass);
+        $("#userPointerRow ." + pointerClass).removeClass(pointerClass);
         if (userPointerArray[i] != originalPointerArray[i]) {
-            $("#" + pointerPosition + "newPointer").addClass(pointerClass);
+            $("#" + pointerPosition + "userPointer").addClass(pointerClass);
         }
     }
     for (var i = 0; i < userNumberArray.length; i++) {
-        var numberPlaceholder = $("#" + i + "newNumber");
+        var numberPlaceholder = $("#" + i + "userNumber");
         if (userNumberArray[i] != originalNumberArray[i]) {
             numberPlaceholder.text(userNumberArray[i]);
         } else {
@@ -76,7 +76,7 @@ function dropPointer(ev) {
     ev.preventDefault();
     var pointerElement = ev.target;
     var pointer = ev.dataTransfer.getData("pointer");
-    $("#newPointerRow ." + pointer).removeClass(pointer);
+    $("#userPointerRow ." + pointer).removeClass(pointer);
     pointerElement.className = pointer; 
     var pointerPosition = parseInt(pointerElement.id, 10);
     var pointerNumber = parseInt(pointer.substr(8, pointer.length -8), 10);
@@ -120,9 +120,9 @@ function iterate() {
     userNumberArray = originalNumberArray.slice();
     userPointerArray = originalPointerArray.slice();
     displayOriginalValues();
-    $("#newNumberRow div div").text("");
+    $("#userNumberRow div div").text("");
     for (var i = 0; i < userPointerArray.length; i++) {
-        $("#newPointerRow div div").removeClass("pointer-" + i);
+        $("#userPointerRow div div").removeClass("pointer-" + i);
     }
 }
 

@@ -17,14 +17,14 @@ layout: default
         <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}originalPointer" draggable="true" ondragstart="dragPointer(event)"></div></div>
         {% endfor %}
     </div>
-    <div id="newNumberRow" class="row">
+    <div id="userNumberRow" class="row">
         {% for i in (0..maxIndex) %}
-        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}newNumber" class="well" ondrop="dropNumber(event)" ondragover="allowNumberDrop(event)"  draggable="true" ondragstart="dragNumberAndDeleteThis(event)"></div></div>
+        <div class="col-sm-{{ columnSpan }}"><div id="{{ i }}userNumber" class="well" ondrop="dropNumber(event)" ondragover="allowNumberDrop(event)"  draggable="true" ondragstart="dragNumberAndDeleteThis(event)"></div></div>
         {% endfor %}
     </div>
-    <div id="newPointerRow" class="row">
+    <div id="userPointerRow" class="row">
         {% for i in (0..maxIndex) %}
-        <div class="col-sm-{{ columnSpan }}" ><div id="{{ i }}newPointer" draggable="true" ondragstart="dragPointer(event)" ondrop="dropPointer(event)" ondragover="allowPointerDrop(event)"></div></div>
+        <div class="col-sm-{{ columnSpan }}" ><div id="{{ i }}userPointer" draggable="true" ondragstart="dragPointer(event)" ondrop="dropPointer(event)" ondragover="allowPointerDrop(event)"></div></div>
         {% endfor %}
     </div>
 </div>
