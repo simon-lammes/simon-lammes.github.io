@@ -174,6 +174,8 @@ function showNextStep() {
     for (var i = 0; i < originalNumberArray.length; i++) {
         if (originalNumberArray[i] != newNumberArray[i]) {
             $("#" + i + "userNumber").text(newNumberArray[i]);
+        } else {
+            $("#" + i + "userNumber").text("");
         }
     }
 }
