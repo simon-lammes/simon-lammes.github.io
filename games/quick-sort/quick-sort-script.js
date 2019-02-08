@@ -6,7 +6,6 @@ var indexOfLastSmaller;
 var newIndexOfLastSmaller;
 var indexOfNext;
 var newIndexOfNext;
-var isAlgorithmFinished;
 
 $(document).ready(function() {
     setupAllValues();
@@ -19,7 +18,6 @@ function setupAllValues() {
     pivotIndex = 0;
     indexOfLastSmaller = 0;
     indexOfNext = 1;
-    isAlgorithmFinished = false;
     var arrayLength = $("#originalNumberRow div div").length;
     originalNumberArray.push(10);
     for (var i = 1; i < arrayLength; i++) {
@@ -71,10 +69,10 @@ function dropNumber(ev) {
 
 
 function nextIteration() {
-    if (isAlgorithmFinished) {
+    if (isAlgorithmFinished()) {
         endFinishedGame();
         return;
-    }
+    } 
     calculateNextIteration();
     var errorMessage = searchUserInputForErrors();
     if (errorMessage == "") {
@@ -82,7 +80,7 @@ function nextIteration() {
         clearUserInput();
     } else {
         alert(errorMessage);
-    }  
+    } 
     displayOriginalValues();
 }
 
@@ -118,8 +116,7 @@ function calculateNextIteration() {
         var temp = newNumberArray[newPivotIndex];
         newNumberArray[newPivotIndex] = newNumberArray[newIndexOfLastSmaller];
         newNumberArray[newIndexOfLastSmaller] = temp;
-        newPivotIndex = newIndexOfLastSmaller;
-        isAlgorithmFinished = true;
+        newPivotIndex = newIndexOfLastSmaller;  
     } else {
         var inspectedValue = newNumberArray[inspectedIndex];
         var pivot = newNumberArray[newPivotIndex];
@@ -130,7 +127,7 @@ function calculateNextIteration() {
             newIndexOfLastSmaller++;
         } 
         newIndexOfNext++;
-    }   
+    }
 }
 
 function iterate() {
@@ -178,4 +175,22 @@ function showNextStep() {
             $("#" + i + "userNumber").text("");
         }
     }
+}
+
+function isAlgorithmFinished() {
+    for (var i = 0; i < originalNumberArray.length; i++) {
+        if (originalNumberArray[i] != newNumberArray[i]) {
+            return false;
+        }
+    }
+    if (pivotIndex != newPivotIndex) {
+        return false;
+    }
+    if (indexOfLastSmaller != newIndexOfLastSmaller) {
+        return false;
+    }
+    if (indexOfNext != newIndexOfNext) {
+        return false;
+    }
+    return true;
 }
