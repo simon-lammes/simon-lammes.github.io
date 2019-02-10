@@ -90,7 +90,7 @@ $(document).ready(function() {
 
 function nextIteration() {
     if (isAlgorithmFinished()) {
-        var endMessage = "You have finished sorting the algorithm with ";
+        var endMessage = "You have finished bubble sorting with ";
         if (hintCount == 1) {
             endMessage += hintCount + " hint and ";
         } else {
@@ -177,7 +177,7 @@ function calculateNextIteration() {
     if (originalPointerArray[1] == 1) {
         if (originalNumberArray[originalPointerArray[0]] > originalNumberArray[originalPointerArray[1]]) {
             var temp = newNumberArray[originalPointerArray[1]];
-            newNumberArray[ponters[0]] = newNumberArray[originalPointerArray[1]];
+            newNumberArray[originalNumberArray[0]] = newNumberArray[originalPointerArray[1]];
             newNumberArray[originalPointerArray[1]] = temp;
         }
         return;
