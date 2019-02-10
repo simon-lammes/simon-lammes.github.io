@@ -69,11 +69,11 @@ function dropNumber(ev) {
 
 
 function nextIteration() {
+    calculateNextIteration();
     if (isAlgorithmFinished()) {
         endFinishedGame();
         return;
-    } 
-    calculateNextIteration();
+    }     
     var errorMessage = searchUserInputForErrors();
     if (errorMessage == "") {
         iterate();
